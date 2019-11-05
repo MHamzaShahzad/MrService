@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Mr Service</string>
+
+
+    <!--For intro slides-->
+    <string name="slide_1_title">Schedule</string>
+    <string name="slide_1_desc">You can have it all in one go, get a year of bond activity without any hassle.</string>
+
+    <string name="slide_2_title">Buying and Selling</string>
+    <string name="slide_2_desc">There is no better business then buying and selling, sale or purchase bonds in a better place.</string>
+
+    <string name="slide_3_title">Wallet System</string>
+    <string name="slide_3_desc">Get alerted by storing your bond number in the wallet system in any of bond activity.</string>
+
+    <string name="slide_4_title">Quick Search</string>
+    <string name="slide_4_desc">It take less effort to search a bond draw or activity then finding its on publications. Find Yours.</string>
+
+    <string name="my_preference">"com.abc.com.MyPref"</string>
+    <string name="my_preference_key">"com.abc.com.Myprefkey</string>
 </resources>
