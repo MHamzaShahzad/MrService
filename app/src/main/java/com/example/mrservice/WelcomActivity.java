@@ -32,7 +32,6 @@ public class WelcomActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
 
         if (new PreferenceManager(this).checkPreference()) {
             loadHome();

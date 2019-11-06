@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
     <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
 
     <color name="active_dots">#fffafa</color>
     <color name="inactive_dots">#84878b</color>
+
+
+    <dimen name="centre_content_width" tools:override="true">80dp</dimen>
+    <dimen name="design_bottom_navigation_height" tools:override="true">52dp</dimen>
+    <dimen name="space_centre_button_default_size" tools:override="true">54dp</dimen>
+    <dimen name="space_centre_button_margin" tools:override="true">0dp</dimen>
+
 </resources>
