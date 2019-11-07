@@ -7,9 +7,14 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
 
+    <color name="button">#A14D4949</color>
+
+
     <color name="active_dots">#fffafa</color>
     <color name="inactive_dots">#84878b</color>
 
+    <color name="google">#0E1FAC</color>
+    <color name="facebook">#3b5998 </color>
 
     <dimen name="centre_content_width" tools:override="true">80dp</dimen>
     <dimen name="design_bottom_navigation_height" tools:override="true">52dp</dimen>

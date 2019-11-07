@@ -123,7 +123,7 @@ public class WelcomActivity extends AppCompatActivity implements View.OnClickLis
 
     }
     private void loadHome() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
         overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
         finish();
     }
