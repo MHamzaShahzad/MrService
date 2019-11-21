@@ -1,0 +1,50 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/background"
+    android:orientation="vertical"
+    android:padding="5dp"
+    tools:context=".ForgotPaswwordActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:padding="10dp"
+        android:text="Please enter your registered phone number."
+        android:textColor="@color/white"
+        android:textSize="17dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="e.g 03226000784"
+            android:background="@color/white"
+            android:inputType="phone"
+            android:padding="10dp"/>
+    </LinearLayout>
+        <Button
+            android:id="@+id/submitvalidation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/signup"
+            android:layout_marginRight="20sp"
+            android:background="@color/button"
+            android:text="Submit request !"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
+
+</LinearLayout>

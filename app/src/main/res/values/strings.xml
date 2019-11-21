@@ -17,4 +17,11 @@
 
     <string name="my_preference">"com.abc.com.MyPref"</string>
     <string name="my_preference_key">"com.abc.com.Myprefkey</string>
+
+    <string name="termsconditionsignup">
+       <u>Terms &amp; Conditions</u>.
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
