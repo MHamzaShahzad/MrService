@@ -5,7 +5,7 @@
     android:background="@mipmap/background"
     android:orientation="vertical"
     android:padding="5dp"
-    tools:context=".SignUpActivity">
+    tools:context=".activities.SignUpActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,7 +25,6 @@
         android:layout_marginRight="20sp"
         android:orientation="vertical">
 
-
         <EditText
             android:id="@+id/name_valid"
             android:background="@color/white"
@@ -34,6 +33,7 @@
             android:hint="e.g 03226000784"
             android:inputType="phone"
             android:padding="10dp"/>
+
     </LinearLayout>
 
     <Button

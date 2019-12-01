@@ -3,16 +3,16 @@
 
 
     <!--For intro slides-->
-    <string name="slide_1_title">Schedule</string>
-    <string name="slide_1_desc">You can have it all in one go, get a year of bond activity without any hassle.</string>
+    <string name="slide_1_title">Upload Task</string>
+    <string name="slide_1_desc">You can Upload Posters or tasks, that you want to be performed by service providers.</string>
 
-    <string name="slide_2_title">Buying and Selling</string>
+    <string name="slide_2_title">Earn Money</string>
     <string name="slide_2_desc">There is no better business then buying and selling, sale or purchase bonds in a better place.</string>
 
-    <string name="slide_3_title">Wallet System</string>
+    <string name="slide_3_title">Track Your Tasks</string>
     <string name="slide_3_desc">Get alerted by storing your bond number in the wallet system in any of bond activity.</string>
 
-    <string name="slide_4_title">Quick Search</string>
+    <string name="slide_4_title">Track Your Bids</string>
     <string name="slide_4_desc">It take less effort to search a bond draw or activity then finding its on publications. Find Yours.</string>
 
     <string name="my_preference">"com.abc.com.MyPref"</string>
@@ -22,6 +22,12 @@
        <u>Terms &amp; Conditions</u>.
     </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="facebook_app_id">1352082224957341</string>
+    <string name="facebook_application_id">1352082224957341</string>
+    <string name="fb_login_protocol_scheme">fb1352082224957341</string>
+    <string name="web_client_id">133320057482-m8errmbt7u9i9hrqdjbt9a3ab80oam8c.apps.googleusercontent.com</string>
+
+    <string name="hello_blank_fragment">Hello World</string>
+    <string name="about_us">"Through Mr. Service you have an ease of access to different individuals whom you find fit for the job. It works in 3 simple steps. Just post the required task to be done, chose the right person for your job with brilliant ratings and wait for it to be done.</string>
+
 </resources>

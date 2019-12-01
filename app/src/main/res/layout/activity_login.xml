@@ -1,130 +1,112 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/background"
-    android:orientation="vertical"
-    android:padding="5dp"
-    tools:context=".LoginActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:padding="10dp"
-        android:text="LOGIN"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="17dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20sp"
-        android:layout_marginRight="20sp"
-        android:orientation="vertical">
-
-
-        <EditText
-            android:id="@+id/phone_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:hint="e.g 03226000784"
-            android:inputType="phone"
-            android:padding="10dp" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:background="@color/white"
-            android:hint="Password"
-            android:inputType="phone"
-            android:padding="10dp" />
-    </LinearLayout>
+    android:fillViewport="true"
+    tools:context=".activities.LoginActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="20dp">
 
-
-        <TextView
-            android:id="@+id/forget_password"
+        <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:text="Forgot Your Password ?"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:visibility="invisible"/>
 
         <TextView
-            android:id="@+id/signup"
+            android:id="@+id/text_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_toRightOf="@+id/forget_password"
-            android:text="Sign Up"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="Welcome"
             android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textSize="17sp" />
+
+        <LinearLayout
+            android:id="@+id/layout_input_login_credentials"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_welcome"
+            android:layout_marginTop="40dp"
+            android:orientation="horizontal">
+
+            <com.hbb20.CountryCodePicker
+                android:id="@+id/ccp"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="0.3"
+                android:background="@color/white"
+                app:defaultCode="92" />
+
+            <EditText
+                android:id="@+id/input_phone_number"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:maxLength="10"
+                android:layout_weight="0.8"
+                android:background="@color/white"
+                android:hint="e.g 3XXXXXXXXX"
+                android:inputType="phone"
+                android:padding="10dp" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20sp"
+            android:layout_below="@id/layout_input_login_credentials"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="20sp"
-            android:layout_toRightOf="@+id/signup"
             android:background="@color/button"
-            android:text="LOG IN"
+            android:text="NEXT"
             android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/login_button_fb"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/facebook"
+                android:drawableStart="@drawable/ic_facebook"
+                android:drawableLeft="@drawable/ic_facebook"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:text="Sign in with Facebook"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/login_button_google"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="#DD4B39"
+                android:drawableStart="@drawable/ic_google"
+                android:drawableLeft="@drawable/ic_google"
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp"
+                android:text="Sign in with Google"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#fff" />
+
+        </LinearLayout>
+
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/alreadyaccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:clickable="true"
-        android:fontFamily="sans-serif-black"
-        android:text="or"
-        android:textAlignment="center"
-        android:textColor="@color/white" />
-
-    <Button
-        android:id="@+id/login_button_fb"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20sp"
-        android:background="@color/facebook"
-        android:drawableLeft="@drawable/ic_facebook"
-        android:paddingLeft="10dp"
-        android:text="Sign in with Facebook"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="#fff" />
-
-    <Button
-        android:id="@+id/login_button_google"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20sp"
-        android:background="#DD4B39"
-        android:drawableLeft="@drawable/ic_google"
-        android:paddingLeft="10dp"
-        android:text="Sign in with Google"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="#fff" />
-
-
-</LinearLayout>
+</ScrollView>

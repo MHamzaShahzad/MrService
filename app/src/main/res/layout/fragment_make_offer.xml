@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryLight"
+    tools:context=".fragments.FragmentMakeOffer">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/textWriteOfferMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Write your message that task provider can read to make the deal confirm!"
+                android:textColor="@color/white" />
+
+            <EditText
+                android:id="@+id/inputOfferMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textWriteOfferMsg"
+                android:layout_marginTop="7dp"
+                android:gravity="top|start"
+                android:hint="Enter Your Offer Message..."
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:padding="5dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+
+            <Button
+                android:id="@+id/btnMakeOffer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/inputOfferMessage"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:padding="5dp"
+                android:text="Make Offer"
+                android:textAllCaps="false"
+                android:textColor="@color/colorPrimaryLight" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</FrameLayout>

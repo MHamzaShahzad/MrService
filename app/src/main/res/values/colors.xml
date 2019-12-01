@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryLight">#3CC5B7</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="colorRatingBarInActive">#DBD8D8</color>
+    <color name="colorRatingBarActive">#FFEB3B</color>
+
+    <color name="colorTransparent">@android:color/transparent</color>
+
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="grey">#A1F5EFEF</color>
 
     <color name="button">#A14D4949</color>
 

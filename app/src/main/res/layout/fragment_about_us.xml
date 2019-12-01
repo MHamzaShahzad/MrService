@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/background"
+        tools:context=".AboutFragment">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:src="@mipmap/ic_launcher" />
+
+
+
+        <RelativeLayout
+            android:id="@+id/relative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/logo">
+
+            <TextView
+                android:id="@+id/likeOnFacebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="45dp"
+                android:drawableLeft="@drawable/ic_facebook_about"
+                android:drawablePadding="10dp"
+                android:text="Like us on Facebook"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:layout_marginStart="10dp"
+                android:drawableStart="@drawable/ic_facebook_about" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/likeOnFacebook"
+                android:layout_marginTop="12dp"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/watchOnYoutube"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view3"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="17dp"
+                android:drawableLeft="@drawable/ic_youtube_about"
+                android:drawablePadding="10dp"
+                android:text="Watch us on Youtube"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:layout_marginStart="10dp"
+                android:drawableStart="@drawable/ic_youtube_about" />
+
+            <View
+                android:id="@+id/view4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/watchOnYoutube"
+                android:layout_marginTop="12dp"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/rateOnPlaystore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view4"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="17dp"
+                android:drawableLeft="@drawable/ic_playstore_about"
+                android:drawablePadding="10dp"
+                android:text="Rate us on Play Store"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:drawableStart="@drawable/ic_playstore_about" />
+
+            <View
+                android:id="@+id/view5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/rateOnPlaystore"
+                android:layout_marginTop="12dp"
+                android:background="@color/white" />
+
+            <TextView
+                android:id="@+id/followOnInstagram"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view5"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="17dp"
+                android:drawableLeft="@drawable/ic_instagram_about"
+                android:drawablePadding="10dp"
+                android:text="Follow us on Instagram"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:drawableStart="@drawable/ic_instagram_about" />
+
+            <View
+                android:id="@+id/view6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/followOnInstagram"
+                android:layout_marginTop="12dp"
+                android:background="@color/white" />
+            <TextView
+                android:id="@+id/contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view6"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="17dp"
+                android:drawableLeft="@drawable/ic_email_contact_black_24dp"
+                android:drawablePadding="10dp"
+                android:text="Contact us"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:drawableStart="@drawable/ic_email_contact_black_24dp" />
+            <View
+                android:id="@+id/view7"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/contact"
+                android:layout_marginTop="12dp"
+                android:background="@color/white" />
+            <TextView
+                android:id="@+id/share"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view7"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="17dp"
+                android:drawableLeft="@drawable/ic_menu_share"
+                android:drawablePadding="10dp"
+                android:text="Invite a friend"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:drawableStart="@drawable/ic_menu_share" />
+            <View
+                android:id="@+id/view8"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/share"
+                android:layout_marginTop="12dp"
+                android:background="@color/white" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_below="@+id/relative"
+            android:id="@+id/about_title_6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="40sp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="40sp"
+            android:layout_marginBottom="25dp"
+            android:gravity="center_horizontal"
+            android:maxLines="1"
+            android:textColor="#fff"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:autoSizeMaxTextSize="17sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="2dp"
+            app:autoSizeTextType="uniform" />
+    </RelativeLayout>
+
+</ScrollView>

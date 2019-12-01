@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    tools:context=".fragments.FragmentReviewOnTask">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/closeReviewDialog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="X"
+            android:textSize="20sp"/>
+
+        <RatingBar
+            android:id="@+id/ratingBarReviewTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/closeReviewDialog"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:id="@+id/inputReviewMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingBarReviewTask"
+            android:layout_margin="10dp"
+            android:gravity="top|start"
+            android:hint="Write your review here"
+            android:inputType="textMultiLine"
+            android:lines="7"
+            android:scrollHorizontally="false" />
+
+        <Button
+            android:id="@+id/btnSubmitReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/inputReviewMessage"
+            android:layout_centerHorizontal="true"
+            android:text="Submit"
+            android:background="@color/colorPrimaryLight"
+            android:textColor="#FFFFFF"/>
+
+    </RelativeLayout>
+
+</FrameLayout>
