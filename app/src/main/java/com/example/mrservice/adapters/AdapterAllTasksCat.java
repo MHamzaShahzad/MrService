@@ -2,6 +2,7 @@ package com.example.mrservice.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import com.example.mrservice.Constants;
 import com.example.mrservice.R;
 import com.example.mrservice.admin.FragmentCatCRUD;
 import com.example.mrservice.fragments.FragmentGetTaskDetail;
-import com.example.mrservice.fragments.FragmentPostTask;
 import com.example.mrservice.models.TaskCat;
 import com.squareup.picasso.Picasso;
 
@@ -25,11 +25,13 @@ import java.util.List;
 
 public class AdapterAllTasksCat extends RecyclerView.Adapter<AdapterAllTasksCat.Holder> {
 
+    private static final String TAG = AdapterAllTasksCat.class.getName();
     private Context context;
     private List<TaskCat> taskCatList;
     private boolean isAdmin;
 
     public AdapterAllTasksCat(Context context, List<TaskCat> taskCatList, boolean isAdmin) {
+
         this.context = context;
         this.taskCatList = taskCatList;
         this.isAdmin = isAdmin;
@@ -43,7 +45,7 @@ public class AdapterAllTasksCat extends RecyclerView.Adapter<AdapterAllTasksCat.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, int position) {
+    public void onBindViewHolder(@NonNull final Holder holder, int position) {
 
         final TaskCat cat = taskCatList.get(holder.getAdapterPosition());
 
@@ -62,15 +64,19 @@ public class AdapterAllTasksCat extends RecyclerView.Adapter<AdapterAllTasksCat.
             public void onClick(View view) {
 
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(Constants.STRING_TASKS_CAT_OBJ, cat);
+                bundle.putSerializable(Constants.STRING_TASKS_CAT_OBJ, taskCatList.get(holder.getAdapterPosition()));
+
                 if (isAdmin) {
                     FragmentCatCRUD fragmentCatCRUD = FragmentCatCRUD.getInstance();
                     fragmentCatCRUD.setArguments(bundle);
                     fragmentCatCRUD.show(((FragmentActivity) context).getSupportFragmentManager(), "");
                 } else {
-                    ((FragmentActivity) context).getSupportFragmentManager().beginTransaction()
-                            .replace(android.R.id.content, FragmentPostTask.getInstance(bundle))
-                            .addToBackStack(Constants.TITLE_UPLOAD_TASK)
+                    Log.e(TAG, "onClick: NOT_ADMIN" );
+                    ((FragmentActivity) context)
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(android.R.id.content, FragmentGetTaskDetail.getInstance(bundle), Constants.TITLE_TASK_DETAIL)
+                            .addToBackStack(Constants.TITLE_TASK_DETAIL)
                             .commit();
                 }
 

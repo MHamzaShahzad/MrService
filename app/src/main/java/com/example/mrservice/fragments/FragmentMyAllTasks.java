@@ -162,24 +162,12 @@ public class FragmentMyAllTasks extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
 
+
                     taskModelList.clear();
                     Iterable<DataSnapshot> snapshots = dataSnapshot.getChildren();
-                    for (DataSnapshot snapshot : snapshots) {
-                        try {
-                            TaskModel taskModel = snapshot.getValue(TaskModel.class);
-
-                            if (taskModel != null && taskModel.getTaskUploadedBy().equals(firebaseUser.getUid()))
-                                if (CommonFunctionsClass.isOutdated(taskModel.getTaskDueDate()) && taskModel.getTaskStatus().equals(Constants.TASKS_STATUS_OPEN))
-                                    makeTaskCancelIfOutDate(taskModel);
-                                else
-                                    taskModelList.add(taskModel);
-
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    loadTasksBasedOnTabSelected(tabMyTasks.getSelectedTabPosition());
+                    for (DataSnapshot snapshot : snapshots)
+                        if (snapshot.exists() && snapshot.getValue() != null)
+                            loadTaskDetails((String) snapshot.getValue());
                 }
             }
 
@@ -188,7 +176,39 @@ public class FragmentMyAllTasks extends Fragment {
 
             }
         };
-        MyFirebaseDatabase.TASKS_REFERENCE.addValueEventListener(tasksValueEventListener);
+        MyFirebaseDatabase.MY_TASKS_REFERENCE.child(firebaseUser.getUid()).addValueEventListener(tasksValueEventListener);
+    }
+
+    private void loadTaskDetails(String taskId) {
+        MyFirebaseDatabase.TASKS_REFERENCE.child(taskId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
+
+                    try {
+                        TaskModel taskModel = dataSnapshot.getValue(TaskModel.class);
+
+                        if (taskModel != null && taskModel.getTaskUploadedBy().equals(firebaseUser.getUid()))
+                            if (CommonFunctionsClass.isOutdated(taskModel.getTaskDueDate()) && taskModel.getTaskStatus().equals(Constants.TASKS_STATUS_OPEN))
+                                makeTaskCancelIfOutDate(taskModel);
+                            else {
+                                taskModelList.remove(taskModel);
+                                taskModelList.add(taskModel);
+                            }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                loadTasksBasedOnTabSelected(tabMyTasks.getSelectedTabPosition());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void makeTaskCancelIfOutDate(final TaskModel taskModel) {
@@ -206,7 +226,7 @@ public class FragmentMyAllTasks extends Fragment {
 
     private void removeTasksValueEventListener() {
         if (tasksValueEventListener != null)
-            MyFirebaseDatabase.TASKS_REFERENCE.removeEventListener(tasksValueEventListener);
+            MyFirebaseDatabase.MY_TASKS_REFERENCE.child(firebaseUser.getUid()).removeEventListener(tasksValueEventListener);
     }
 
     @Override

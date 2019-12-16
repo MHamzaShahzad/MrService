@@ -170,7 +170,7 @@ public class FragmentGetTaskDate extends Fragment implements View.OnClickListene
                 ((FragmentActivity) context)
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container_post_task, FragmentGetTaskBudget.getInstance(bundleData), Constants.TITLE_TASK_BUDGET)
+                        .replace(android.R.id.content, FragmentGetTaskBudget.getInstance(bundleData), Constants.TITLE_TASK_BUDGET)
                         .addToBackStack(Constants.TITLE_TASK_BUDGET)
                         .commit();
             }

@@ -67,6 +67,7 @@ public class FragmentGetTaskDetail extends Fragment implements View.OnClickListe
         context = container.getContext();
         // Inflate the layout for this fragment
         if (view == null) {
+            Log.e(TAG, "onCreateView: " );
             view = inflater.inflate(R.layout.fragment_get_task_detail, container, false);
 
 
@@ -184,7 +185,7 @@ public class FragmentGetTaskDetail extends Fragment implements View.OnClickListe
                 ((FragmentActivity) context)
                         .getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.fragment_container_post_task, FragmentGetTaskDate.getInstance(bundleData), Constants.TITLE_TASK_DUE_DATE)
+                        .replace(android.R.id.content, FragmentGetTaskDate.getInstance(bundleData), Constants.TITLE_TASK_DUE_DATE)
                         .addToBackStack(Constants.TITLE_TASK_DETAIL)
                         .commit();
             }

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    tools:context=".fragments.FragmentTaskFilter">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardSelectStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="10dp"
+                                android:fontFamily="@font/raleway_light"
+                                android:padding="5dp"
+                                android:text="Select Task Based On Status"
+                                android:textSize="18sp" />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:drawablePadding="10dp"
+                                    android:fontFamily="@font/raleway_light"
+                                    android:padding="5dp"
+                                    android:text="Hide Assigned Task"
+                                    android:textSize="16sp" />
+
+                                <androidx.appcompat.widget.SwitchCompat
+                                    android:id="@+id/switchHideAssignedTask"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardSelectCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/cardSelectStatus"
+                        android:layout_margin="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="10dp"
+                                android:fontFamily="@font/raleway_light"
+                                android:padding="5dp"
+                                android:text="Select Category"
+                                android:textSize="18sp" />
+
+                            <EditText
+                                android:id="@+id/taskCategory"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/border_style_edittext"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:fontFamily="@font/raleway_light"
+                                android:hint="Category"
+                                android:inputType="number"
+                                android:textSize="15sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardSelectLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/cardSelectCategory"
+                        android:layout_margin="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="10dp"
+                                android:fontFamily="@font/raleway_light"
+                                android:padding="5dp"
+                                android:text="Select Location"
+                                android:textSize="18sp" />
+
+                            <EditText
+                                android:id="@+id/taskLocation"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/border_style_edittext"
+                                android:focusable="false"
+                                android:focusableInTouchMode="false"
+                                android:fontFamily="@font/raleway_light"
+                                android:hint="Location"
+                                android:inputType="number"
+                                android:textSize="15sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardSelectBudget"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/cardSelectLocation"
+                        android:layout_margin="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="10dp"
+                                android:fontFamily="@font/raleway_light"
+                                android:padding="5dp"
+                                android:text="What's Min Budget"
+                                android:textSize="18sp" />
+
+                            <EditText
+                                android:id="@+id/taskBudget"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/border_style_edittext"
+                                android:fontFamily="@font/raleway_light"
+                                android:hint="Min Budget"
+                                android:inputType="number"
+                                android:textSize="15sp" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/cardSelectBudget"
+                        android:layout_margin="5dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="10dp"
+                                android:fontFamily="@font/raleway_light"
+                                android:padding="5dp"
+                                android:text="Showing"
+                                android:textSize="18sp" />
+
+                            <Spinner
+                                android:id="@+id/spinnerSelectTaskType"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:padding="20dp"
+                                android:background="@drawable/border_style_edittext"
+                                android:fontFamily="@font/raleway_light" />
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+            </ScrollView>
+
+            <LinearLayout
+                android:id="@+id/layout_reset_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/style_button_solid"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnReset"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/style_button_lining"
+                    android:fontFamily="@font/raleway_light"
+                    android:text="Reset"
+                    android:textAllCaps="false"
+                    android:textColor="#015E6B"
+                    android:textSize="17sp" />
+
+                <Button
+                    android:id="@+id/btnSearch"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/style_button_lining"
+                    android:fontFamily="@font/raleway_light"
+                    android:text="Search"
+                    android:textAllCaps="false"
+                    android:textColor="#015E6B"
+                    android:textSize="17sp" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <include layout="@layout/services_bottom_up_sheet" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</FrameLayout>

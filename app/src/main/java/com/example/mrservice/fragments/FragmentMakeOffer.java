@@ -47,7 +47,7 @@ public class FragmentMakeOffer extends DialogFragment {
 
     private Bundle arguments;
 
-    public static FragmentMakeOffer getInstance(Bundle arguments){
+    public static FragmentMakeOffer getInstance(Bundle arguments) {
         return new FragmentMakeOffer(arguments);
     }
 
@@ -80,12 +80,16 @@ public class FragmentMakeOffer extends DialogFragment {
             public void onClick(View view) {
 
                 if (inputOfferMessage.length() > 0)
-                    MyFirebaseDatabase.TASKS_REFERENCE.child(taskModel.getTaskId()).child(Constants.STRING_OFFERS_REF).child(firebaseUser.getUid()).setValue(buildBidInstance()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    MyFirebaseDatabase.TASK_OFFERS_REFERENCE.child(taskModel.getTaskId()).child(firebaseUser.getUid()).setValue(buildBidInstance()).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(context, "Offer Sent Successfully!", Toast.LENGTH_LONG).show();
-                                SendPushNotificationFirebase.buildAndSendNotification(context, taskModel.getTaskUploadedBy(), "New Offer!", "Your task has new Offer");
+                                SendPushNotificationFirebase.buildAndSendNotification(
+                                        context,
+                                        taskModel.getTaskUploadedBy(),
+                                        "New Offer!",
+                                        "Your task has new Offer");
                                 FragmentMakeOffer.this.dismiss();
                             } else
                                 Toast.makeText(context, "Offer Could't be sent!", Toast.LENGTH_LONG).show();

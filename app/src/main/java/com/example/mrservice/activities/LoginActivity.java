@@ -60,9 +60,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Context context;
 
     private EditText inputPhoneNumber, input_otp;
-    private TextView btnLogin;
     private ProgressBar progressBar;
-    private Button btn_verify, login_button_fb, login_button_google;
+    private Button btnLogin, btn_verify, login_button_fb, login_button_google;
 
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;

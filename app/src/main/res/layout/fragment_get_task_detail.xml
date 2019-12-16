@@ -12,14 +12,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <LinearLayout
+            android:id="@+id/layout_task_uploading_steps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:padding="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text="Details" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="Date" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="Budget" />
+
+        </LinearLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/layout_task_uploading_steps"
             android:fillViewport="true">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:padding="10dp">
 
                 <EditText
                     android:id="@+id/taskTitle"
@@ -53,6 +89,7 @@
                     android:id="@+id/taskTypeGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_below="@id/taskDescription"
                     android:background="@drawable/edittextstyle"
                     android:padding="10dp"

@@ -8,9 +8,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -22,30 +29,44 @@ import com.example.mrservice.adapters.AdapterAllTasks;
 import com.example.mrservice.controllers.MyFirebaseDatabase;
 import com.example.mrservice.controllers.SendPushNotificationFirebase;
 import com.example.mrservice.interfaces.FragmentInteractionListener;
+import com.example.mrservice.interfaces.OnTaskFilterI;
 import com.example.mrservice.models.TaskModel;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 
-public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout.OnRefreshListener, OnTaskFilterI, View.OnClickListener {
 
     private static final String TAG = FragmentAllTasksHome.class.getName();
     private Context context;
     private View view;
 
+    private SearchView searchTaskByTitle;
+    private ImageButton btnShowTaskOnMap;
+    private ImageView btnShowFilters;
     private static RecyclerView recyclerAllTasks;
     private static AdapterAllTasks adapterAllTasks;
+    private ArrayAdapter<String> adapterSearchAutoComplete;
 
     private List<TaskModel> taskModelList;
     private ValueEventListener allTasksValueEventListener;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private FragmentInteractionListener mListener;
+
+    private FragmentMapTasks fragmentMapTasks;
+
+    private static HashMap<String, Object> mapFilter;
+    private List<String> listTitlesForATS;
 
     public static FragmentAllTasksHome getInstance() {
         return new FragmentAllTasksHome();
@@ -54,6 +75,10 @@ public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout
     private FragmentAllTasksHome() {
         // Required empty public constructor
         taskModelList = new ArrayList<>();
+        mapFilter = new HashMap<>();
+        listTitlesForATS = new ArrayList<>();
+        fragmentMapTasks = FragmentMapTasks.getInstance();
+
     }
 
 
@@ -63,19 +88,66 @@ public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout
         if (mListener != null)
             mListener.onFragmentInteractionListener(Constants.TITLE_HOME);
         context = container.getContext();
-
+        adapterSearchAutoComplete = new ArrayAdapter<>(context,android.R.layout.simple_dropdown_item_1line, listTitlesForATS);
         // Inflate the layout for this fragment
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_all_tasks_home, container, false);
+
 
             recyclerAllTasks = view.findViewById(R.id.recyclerAllTasks);
             recyclerAllTasks.setHasFixedSize(true);
             recyclerAllTasks.setLayoutManager(new LinearLayoutManager(context));
 
             initSwipeRefreshLayout();
-
+            initLayoutWidgets();
         }
         return view;
+    }
+
+    private void initLayoutWidgets() {
+        btnShowFilters = view.findViewById(R.id.btnShowFilters);
+        btnShowTaskOnMap = view.findViewById(R.id.btnShowTaskOnMap);
+
+        searchTaskByTitle = view.findViewById(R.id.searchTaskByTitle);
+        SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete) searchTaskByTitle.findViewById(R.id.search_src_text);
+        searchAutoComplete.setAdapter(adapterSearchAutoComplete);
+
+        btnShowFilters.setOnClickListener(this);
+        btnShowTaskOnMap.setOnClickListener(this);
+
+        setSearchListener(searchAutoComplete);
+    }
+
+    private void setSearchListener(final SearchView.SearchAutoComplete searchAutoComplete){
+        searchAutoComplete.setTextColor(getResources().getColor(R.color.white));
+        searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                searchAutoComplete.setText(adapterSearchAutoComplete.getItem(i));
+                searchAutoComplete.setSelection(searchAutoComplete.getText().toString().length());
+            }
+        });
+
+        searchTaskByTitle.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(context, "You clicked on search " + searchTaskByTitle.getQuery() , Toast.LENGTH_SHORT).show();
+                List<TaskModel> taskModelListTemp = new ArrayList<>();
+                for (TaskModel model : taskModelList)
+                    if (Pattern.compile(Pattern.quote(searchTaskByTitle.getQuery().toString()), Pattern.CASE_INSENSITIVE).matcher(model.getTaskTitle()).find())
+                        taskModelListTemp.add(model);
+
+                taskModelList.clear();
+                taskModelList.addAll(taskModelListTemp);
+                adapterAllTasks.notifyDataSetChanged();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     private void initSwipeRefreshLayout() {
@@ -96,12 +168,12 @@ public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout
             public void run() {
                 startRefreshing();
                 // Fetching data from server
-                loadAllTasks();
+                loadAllTasks(mapFilter);
             }
         });
     }
 
-    private void loadAllTasks() {
+    private void loadAllTasks(final HashMap<String, Object> map) {
         removeAllTasksEventListener();
         allTasksValueEventListener = new ValueEventListener() {
             @Override
@@ -112,6 +184,7 @@ public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout
                     @Override
                     public void run() {
                         taskModelList.clear();
+                        listTitlesForATS.clear();
                         if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
                             try {
                                 Iterable<DataSnapshot> snapshots = dataSnapshot.getChildren();
@@ -119,12 +192,59 @@ public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout
                                     TaskModel taskModel = snapshot.getValue(TaskModel.class);
                                     if (taskModel != null) {
 
+                                        boolean matches = true;
+
+                                        for (Map.Entry<String, Object> entry : map.entrySet()) {
+
+                                            switch (entry.getKey()) {
+
+                                                case Constants.STRING_TASK_CITY:
+                                                    Log.e(TAG, "run: " + entry.getValue());
+                                                    if (taskModel.getTaskLocation() != null && !Pattern.compile(Pattern.quote((String) entry.getValue()), Pattern.CASE_INSENSITIVE).matcher(taskModel.getTaskLocation()).find())
+                                                        matches = false;
+                                                    break;
+
+                                                case Constants.STRING_TASKS_CAT_ID:
+                                                    if (!Pattern.compile(Pattern.quote((String) entry.getValue()), Pattern.CASE_INSENSITIVE).matcher(taskModel.getTaskCategory()).find())
+                                                        matches = false;
+                                                    break;
+
+                                                case Constants.STRING_TASKS_CAT:
+                                                    if (!Pattern.compile(Pattern.quote((String) entry.getValue()), Pattern.CASE_INSENSITIVE).matcher(taskModel.getTaskCatName()).find())
+                                                        matches = false;
+                                                    break;
+                                                case Constants.STRING_SHOW_ONLY_OPEN_TASK:
+                                                    if ((Boolean) entry.getValue())
+                                                        if (!taskModel.getTaskStatus().equals(Constants.TASKS_STATUS_OPEN))
+                                                            matches = false;
+                                                    break;
+
+                                                case Constants.STRING_TASK_BUDGET:
+                                                    Log.e(TAG, "onDataChange: " + taskModel.getTaskBudget() + " : " + entry.getValue());
+                                                    if (Integer.parseInt(taskModel.getTaskBudget()) < (Integer) entry.getValue()) {
+                                                        matches = false;
+                                                    }
+                                                    break;
+
+                                                case Constants.STRING_TASK_TYPE:
+                                                    if (!entry.getValue().equals("2") && !taskModel.getTaskType().equals((String) entry.getValue())) {
+                                                        matches = false;
+                                                    }
+                                                    break;
+
+                                            }
+
+                                        }
+
                                         if (!taskModel.getTaskStatus().equals(Constants.TASKS_STATUS_CANCELLED))
                                             if (CommonFunctionsClass.isOutdated(taskModel.getTaskDueDate()) && taskModel.getTaskStatus().equals(Constants.TASKS_STATUS_OPEN))
                                                 makeTaskCancelIfOutDate(taskModel);
-                                            else
-                                                taskModelList.add(taskModel);
-
+                                            else {
+                                                if (matches) {
+                                                    taskModelList.add(taskModel);
+                                                    listTitlesForATS.add(taskModel.getTaskTitle());
+                                                }
+                                            }
                                     }
                                 }
 
@@ -135,6 +255,8 @@ public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout
                         Log.e(TAG, "onDataChange: " + taskModelList.size());
                         adapterAllTasks = new AdapterAllTasks(context, taskModelList);
                         recyclerAllTasks.setAdapter(adapterAllTasks);
+                        adapterSearchAutoComplete.notifyDataSetChanged();
+                        fragmentMapTasks.onTaskListUpdate(taskModelList);
                         stopRefreshing();
                     }
                 });
@@ -201,7 +323,7 @@ public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onResume() {
-        loadAllTasks();
+        loadAllTasks(mapFilter);
         super.onResume();
         Log.e(TAG, "onResume: ");
         if (mListener != null)
@@ -210,6 +332,25 @@ public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout
 
     @Override
     public void onRefresh() {
-        loadAllTasks();
+        loadAllTasks(mapFilter);
+    }
+
+    @Override
+    public void onTaskFilter(HashMap<String, Object> mapFilter) {
+        Log.e(TAG, "onTaskFilter: " + mapFilter);
+        loadAllTasks(mapFilter);
+        FragmentAllTasksHome.mapFilter = mapFilter;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btnShowFilters:
+                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(android.R.id.content, FragmentTaskFilter.getInstance(mapFilter, FragmentAllTasksHome.this)).addToBackStack("Tasks Filter").commit();
+                break;
+            case R.id.btnShowTaskOnMap:
+                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(android.R.id.content, fragmentMapTasks).addToBackStack("Tasks On Map").commit();
+                break;
+        }
     }
 }

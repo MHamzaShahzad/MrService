@@ -20,6 +20,7 @@ import com.example.mrservice.R;
 import com.example.mrservice.controllers.MyFirebaseDatabase;
 import com.example.mrservice.controllers.SendPushNotificationFirebase;
 import com.example.mrservice.fragments.FragmentViewProfile;
+import com.example.mrservice.interfaces.OnTaskModelUpdateI;
 import com.example.mrservice.models.TaskBid;
 import com.example.mrservice.models.TaskModel;
 import com.example.mrservice.models.UserProfileModel;
@@ -38,7 +39,7 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AdapterAllOffers extends RecyclerView.Adapter<AdapterAllOffers.Holder> {
+public class AdapterAllOffers extends RecyclerView.Adapter<AdapterAllOffers.Holder> implements OnTaskModelUpdateI {
     private static final String TAG = AdapterAllOffers.class.getName();
     private Context context;
     private TaskModel taskModel;
@@ -111,6 +112,11 @@ public class AdapterAllOffers extends RecyclerView.Adapter<AdapterAllOffers.Hold
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    @Override
+    public void onTaskModelUpdate(TaskModel taskModel) {
+        this.taskModel = taskModel;
     }
 
     public class Holder extends RecyclerView.ViewHolder {

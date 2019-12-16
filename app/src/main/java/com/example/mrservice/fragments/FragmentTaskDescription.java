@@ -23,14 +23,17 @@ import android.widget.Toast;
 import com.example.mrservice.Constants;
 import com.example.mrservice.R;
 import com.example.mrservice.adapters.AdapterAllOffers;
+import com.example.mrservice.adapters.AdapterChat;
 import com.example.mrservice.controllers.MyFirebaseDatabase;
 import com.example.mrservice.controllers.SendPushNotificationFirebase;
 import com.example.mrservice.interfaces.FragmentInteractionListener;
+import com.example.mrservice.models.ChatModel;
 import com.example.mrservice.models.TaskBid;
 import com.example.mrservice.models.TaskModel;
 import com.example.mrservice.models.UserProfileModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -56,24 +59,23 @@ public class FragmentTaskDescription extends Fragment {
     private Button btnMakeOffer, btnEditOffer, btnRemoveOffer, btnCompleteTask, btnIncompleteTask, btnReview;
     private TextView taskTitle, placePostedBy, placeUploadedDuration, placeTaskDescription, placeTaskLocation,
             viewOnMap, placeDueDate, placeBudget, taskReview;
-    private RecyclerView recyclerTaskOffers;
     private LinearLayout layout_edit_remove, layout_complete_incomplete_task;
 
-    private AdapterAllOffers adapterAllOffers;
-    private List<TaskBid> taskBidList;
 
-    private ValueEventListener taskValueEventListener, userProfileValueEventListener, bidsValueEventListener;
+    private ValueEventListener taskValueEventListener, userProfileValueEventListener;
     private String taskId, userProfileId;
 
     private FirebaseUser firebaseUser;
     private FragmentInteractionListener mListener;
+    private TabLayout tabTaskOfferAndComments;
 
-    private Bundle arguments;
+    private Bundle arguments, bundleChatArguments, bundleOffersArguments;
 
     private FragmentTaskDescription(Bundle bundle) {
         // Required empty public constructor
         this.arguments = bundle;
-        taskBidList = new ArrayList<>();
+        bundleChatArguments = new Bundle();
+        bundleOffersArguments = new Bundle();
     }
 
     public static FragmentTaskDescription getInstance(Bundle bundle) {
@@ -123,18 +125,48 @@ public class FragmentTaskDescription extends Fragment {
         btnIncompleteTask = view.findViewById(R.id.btnIncompleteTask);
         btnReview = view.findViewById(R.id.btnReview);
 
-        recyclerTaskOffers = view.findViewById(R.id.recyclerTaskOffers);
+        tabTaskOfferAndComments = view.findViewById(R.id.tabTaskOfferAndComments);
+
+        setTabMyTasks();
+
     }
 
-    private void setRecyclerView(TaskModel taskModel) {
 
-        recyclerTaskOffers.setLayoutManager(new LinearLayoutManager(context));
-        recyclerTaskOffers.setHasFixedSize(true);
-        adapterAllOffers = new AdapterAllOffers(context, taskModel, taskBidList);
-        recyclerTaskOffers.setAdapter(adapterAllOffers);
+    private void setTabMyTasks() {
+        tabTaskOfferAndComments.addTab(tabTaskOfferAndComments.newTab().setText("Offers"), true);
+        tabTaskOfferAndComments.addTab(tabTaskOfferAndComments.newTab().setText("Comments"));
 
-        getTaskOffers(taskModel.getTaskId());
+        setTabSelectedListener();
     }
+
+    private void setTabSelectedListener() {
+        tabTaskOfferAndComments.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+                switch (tab.getPosition()) {
+                    case 0:
+                        ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragmentOffersOrComments, FragmentOffersList.getInstance(bundleOffersArguments)).commit();
+                        break;
+                    case 1:
+                        ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragmentOffersOrComments, FragmentChat.getInstance(bundleChatArguments)).commit();
+                        break;
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+        tabTaskOfferAndComments.setSelected(true);
+    }
+
 
     private void getDetails() {
 
@@ -166,8 +198,6 @@ public class FragmentTaskDescription extends Fragment {
                         TaskModel taskModel = dataSnapshot.getValue(TaskModel.class);
 
                         if (taskModel != null) {
-
-                            setRecyclerView(taskModel);
 
                             taskTitle.setText(taskModel.getTaskTitle());
                             placeTaskLocation.setText(taskModel.getTaskLocation());
@@ -201,7 +231,10 @@ public class FragmentTaskDescription extends Fragment {
                                     break;
                             }
 
+                            updateBundleData(taskModel);
+
                         }
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -215,6 +248,17 @@ public class FragmentTaskDescription extends Fragment {
             }
         };
         MyFirebaseDatabase.TASKS_REFERENCE.child(taskId).addValueEventListener(taskValueEventListener);
+    }
+
+    private void updateBundleData(TaskModel taskModel) {
+
+        bundleChatArguments.clear();
+        bundleOffersArguments.clear();
+
+        bundleOffersArguments.putSerializable(Constants.STRING_TASK_OBJECT, taskModel);
+        bundleChatArguments.putString(Constants.MESSAGE_RECEIVER_ID, taskModel.getTaskUploadedBy());
+        bundleChatArguments.putString(Constants.CHAT_ID_REF, taskModel.getTaskId());
+
     }
 
     private void reviewTaskBySeller(final TaskModel taskModel) {
@@ -334,35 +378,6 @@ public class FragmentTaskDescription extends Fragment {
         return 0.0;
     }
 
-    private void getTaskOffers(String taskId) {
-        bidsValueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                taskBidList.clear();
-                if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
-                    Iterable<DataSnapshot> snapshots = dataSnapshot.getChildren();
-                    for (DataSnapshot snapshot : snapshots) {
-                        if (snapshot.exists() && snapshot.getValue() != null)
-                            try {
-                                TaskBid taskBid = snapshot.getValue(TaskBid.class);
-                                taskBidList.add(taskBid);
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                    }
-                }
-                adapterAllOffers.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-        MyFirebaseDatabase.TASKS_REFERENCE.child(taskId).child(Constants.STRING_OFFERS_REF).addValueEventListener(bidsValueEventListener);
-    }
 
     private void setViewOnMap(final String locationAddress, final double latitude, final double longitude) {
         viewOnMap.setOnClickListener(new View.OnClickListener() {
@@ -406,7 +421,7 @@ public class FragmentTaskDescription extends Fragment {
 
         btnMakeOffer.setVisibility(View.VISIBLE);
         if (taskModel.getTaskStatus().equals(Constants.TASKS_STATUS_OPEN)) {
-            MyFirebaseDatabase.TASKS_REFERENCE.child(taskModel.getTaskId()).child(Constants.STRING_OFFERS_REF).child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            MyFirebaseDatabase.TASK_OFFERS_REFERENCE.child(taskModel.getTaskId()).child(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -511,17 +526,11 @@ public class FragmentTaskDescription extends Fragment {
 
     }
 
-    private void removeBidsEventListener() {
-        if (bidsValueEventListener != null && taskId != null)
-            MyFirebaseDatabase.TASKS_REFERENCE.child(taskId).child(Constants.STRING_OFFERS_REF).removeEventListener(bidsValueEventListener);
-
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         removeTaskEventListener();
-        removeBidsEventListener();
     }
 
     @Override
@@ -543,6 +552,7 @@ public class FragmentTaskDescription extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        setTabSelectedListener();
         if (mListener != null)
             mListener.onFragmentInteractionListener(Constants.TITLE_TASK_DESCRIPTION);
     }

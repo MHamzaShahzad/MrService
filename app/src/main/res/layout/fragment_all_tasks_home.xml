@@ -7,16 +7,59 @@
     android:clickable="true"
     tools:context=".fragments.FragmentAllTasksHome">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_container"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerAllTasks"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <ImageView
+                android:id="@+id/btnShowFilters"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:src="@drawable/ic_settings_filter" />
+
+            <ImageButton
+                android:id="@+id/btnShowTaskOnMap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:layout_toStartOf="@id/btnShowFilters"
+                android:layout_toLeftOf="@id/btnShowFilters"
+                android:background="@color/fui_transparent"
+                android:src="@drawable/ic_location_black_24dp" />
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchTaskByTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@id/btnShowTaskOnMap"
+                android:clickable="true"
+                android:layout_alignParentLeft="true" />
+
+        </RelativeLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerAllTasks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

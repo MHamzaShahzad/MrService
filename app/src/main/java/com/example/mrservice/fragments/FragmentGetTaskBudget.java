@@ -113,7 +113,7 @@ public class FragmentGetTaskBudget extends Fragment {
     }
 
     private void submitTak() {
-        String id = UUID.randomUUID().toString();
+        final String id = UUID.randomUUID().toString();
         TaskModel taskModel = buildTaskObject(id);
         if (taskModel != null)
             MyFirebaseDatabase.TASKS_REFERENCE.child(id).setValue(taskModel).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -122,6 +122,7 @@ public class FragmentGetTaskBudget extends Fragment {
                     progressDialog.dismiss();
                     if (task.isSuccessful()) {
                         Toast.makeText(context, "TaskModel Uploaded Successfully", Toast.LENGTH_LONG).show();
+                        MyFirebaseDatabase.MY_TASKS_REFERENCE.child(firebaseUser.getUid()).push().setValue(id);
                         CommonFunctionsClass.clearFragmentBackStack(((FragmentActivity) context).getSupportFragmentManager());
                     } else
                         customSnackBar.setText("Can't upload task due to : " + task.getException().getMessage()).show();

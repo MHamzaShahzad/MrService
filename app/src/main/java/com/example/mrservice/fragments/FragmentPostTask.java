@@ -40,15 +40,6 @@ public class FragmentPostTask extends Fragment {
         // Inflate the layout for this fragment
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_post_task, container, false);
-
-            ((FragmentActivity) context)
-                    .getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container_post_task, FragmentGetTaskDetail.getInstance(bundleData), Constants.TITLE_TASK_DETAIL)
-                    .addToBackStack(Constants.TITLE_TASK_DETAIL)
-                    .commit();
-
-
         }
         return view;
     }
