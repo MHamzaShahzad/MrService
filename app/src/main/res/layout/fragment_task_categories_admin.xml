@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@mipmap/background"
     android:clickable="true"
     android:padding="10dp"
     tools:context=".admin.FragmentTaskCategoriesAdmin">
@@ -16,6 +16,14 @@
         android:layout_gravity="top|end"
         android:background="?android:attr/selectableItemBackground"
         android:src="@drawable/ic_close_black_24dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:text="Categories"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_task_cat"

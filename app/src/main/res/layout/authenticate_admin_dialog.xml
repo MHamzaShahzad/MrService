@@ -13,8 +13,7 @@
         android:layout_marginRight="10dp"
         android:fontFamily="@font/raleway_light"
         android:text="Enter username and password."
-
-        android:textColor="#146AAF"
+        android:textColor="@color/colorPrimaryLight"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -80,14 +79,15 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/gradient_background"
+        android:background="@color/colorPrimaryLight"
         android:fontFamily="@font/raleway_light"
         android:paddingStart="5dp"
         android:paddingLeft="5dp"
         android:text="OK"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="#fff"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:textSize="18sp" />
 
 </RelativeLayout>

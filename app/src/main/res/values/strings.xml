@@ -4,16 +4,16 @@
 
     <!--For intro slides-->
     <string name="slide_1_title">Upload Task</string>
-    <string name="slide_1_desc">You can Upload Posters or tasks, that you want to be performed by service providers.</string>
+    <string name="slide_1_desc">You can upload posters or tasks, that you want to be performed by service providers.</string>
 
     <string name="slide_2_title">Earn Money</string>
-    <string name="slide_2_desc">There is no better business then buying and selling, sale or purchase bonds in a better place.</string>
+    <string name="slide_2_desc">Its our business to give you business!</string>
 
     <string name="slide_3_title">Track Your Tasks</string>
-    <string name="slide_3_desc">Get alerted by storing your bond number in the wallet system in any of bond activity.</string>
+    <string name="slide_3_desc">Making it easier to track small details or handling large projects.</string>
 
     <string name="slide_4_title">Track Your Bids</string>
-    <string name="slide_4_desc">It take less effort to search a bond draw or activity then finding its on publications. Find Yours.</string>
+    <string name="slide_4_desc">Keep your bids trackable in the back of your mind.</string>
 
     <string name="my_preference">"com.abc.com.MyPref"</string>
     <string name="my_preference_key">"com.abc.com.Myprefkey</string>

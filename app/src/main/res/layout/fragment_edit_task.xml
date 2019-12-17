@@ -41,7 +41,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="5dp">
+                        android:padding="5dp"
+                        android:background="@color/colorPrimaryLight">
 
                         <EditText
                             android:id="@+id/taskTitle"
@@ -49,7 +50,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:hint="Task Title..."
+                            android:background="@drawable/edittextstyle"
                             android:inputType="text"
+                            android:textColorHint="@color/white"
+                            android:textColor="@color/white"
                             android:padding="5dp" />
 
                         <EditText
@@ -58,7 +62,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:gravity="top|start"
+                            android:textColorHint="@color/white"
                             android:hint="Detail about Task"
+                            android:background="@drawable/edittextstyle"
                             android:inputType="textMultiLine"
                             android:lines="10"
                             android:scrollHorizontally="false" />
@@ -68,7 +74,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            android:textColorHint="@color/white"
                             android:focusable="false"
+                            android:background="@drawable/edittextstyle"
                             android:focusableInTouchMode="false"
                             android:hint="Task Category"
                             android:padding="5dp" />
@@ -78,8 +86,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            android:padding="5dp"
                             android:drawableLeft="@drawable/ic_location_on_black_24dp"
                             android:drawablePadding="5dp"
+                            android:background="@drawable/edittextstyle"
+                            android:textColorHint="@color/white"
                             android:focusable="false"
                             android:focusableInTouchMode="false"
                             android:hint="Task Location" />
@@ -91,7 +102,8 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    >
 
 
                     <RadioGroup
@@ -99,21 +111,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="5dp">
+                        android:padding="5dp"
+                        android:background="@color/colorPrimaryLight">
 
                         <RadioButton
                             android:id="@+id/btnPhysicalTask"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
-                            android:text="Physical" />
+                            android:text="Physical"
+                            android:textColor="@color/white"/>
 
                         <RadioButton
                             android:id="@+id/btnOnlineTask"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.5"
-                            android:text="Online" />
+                            android:text="Online"
+                            android:textColor="@color/white"/>
 
                     </RadioGroup>
 
@@ -132,26 +147,32 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"                            android:background="@drawable/edittextstyle"
+                    >
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="5dp">
+                        android:padding="5dp"
+                        android:background="@color/colorPrimaryLight">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:inputType="text"
-                            android:text="Due Date" />
+                            android:text="Due Date"
+                            android:padding="3dp"
+                            android:background="@drawable/edittextstyle"
+                            android:textColor="@color/white"/>
 
                         <TextView
                             android:id="@+id/selectDueDate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="7dp"
+                            android:background="@drawable/edittextstyle"
 
                             />
 
@@ -177,6 +198,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+                        android:background="@color/colorPrimaryLight"
                         android:padding="5dp">
 
                         <TextView
@@ -184,6 +206,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="5dp"
                             android:inputType="text"
+                            android:padding="3dp"
+                            android:background="@drawable/edittextstyle"
+                            android:textColor="@color/white"
                             android:text="What's your budget ?" />
 
                         <EditText
@@ -191,6 +216,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
+                            android:background="@drawable/edittextstyle"
+                            android:textColorHint="@color/white"
                             android:padding="7dp" />
 
                     </LinearLayout>
@@ -206,7 +233,8 @@
                     android:background="@color/white"
                     android:text="Submit"
                     android:textAllCaps="false"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/colorPrimaryLight"
+                    android:textStyle="bold"/>
 
 
             </LinearLayout>

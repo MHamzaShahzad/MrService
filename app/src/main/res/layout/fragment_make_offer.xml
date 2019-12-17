@@ -31,6 +31,7 @@
                 android:layout_below="@id/textWriteOfferMsg"
                 android:layout_marginTop="7dp"
                 android:gravity="top|start"
+                android:background="@drawable/edittextstyle"
                 android:hint="Enter Your Offer Message..."
                 android:inputType="textMultiLine"
                 android:lines="5"

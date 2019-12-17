@@ -24,7 +24,7 @@ public class WelcomActivity extends AppCompatActivity implements View.OnClickLis
 
     private ViewPager mpager;
     private int[] layouts = {R.layout.intro_slide_first, R.layout.intro_slide_second, R.layout.intro_slide_third
-            , R.layout.intro_slide_second};
+            , R.layout.intro_slide_forth};
     private MpagerAdapter mpagerAdapter;
 
     private LinearLayout Dots_Layout;

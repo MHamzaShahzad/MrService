@@ -10,11 +10,20 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Filter your tasks"
+            android:textStyle="bold"
+            android:fontFamily="@font/raleway_light"
+            android:layout_margin="10dp"
+            android:background="@drawable/border_style_edittext"
+            android:textSize="18sp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="60dp">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -42,13 +51,15 @@
                                 android:drawablePadding="10dp"
                                 android:fontFamily="@font/raleway_light"
                                 android:padding="5dp"
+                                android:textColor="@color/black"
                                 android:text="Select Task Based On Status"
                                 android:textSize="18sp" />
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="10dp">
+                                android:layout_margin="10dp"
+                                android:background="@drawable/border_style_edittext">
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -56,6 +67,7 @@
                                     android:drawablePadding="10dp"
                                     android:fontFamily="@font/raleway_light"
                                     android:padding="5dp"
+                                    android:textColor="@color/black"
                                     android:text="Hide Assigned Task"
                                     android:textSize="16sp" />
 
@@ -91,6 +103,7 @@
                                 android:drawablePadding="10dp"
                                 android:fontFamily="@font/raleway_light"
                                 android:padding="5dp"
+                                android:textColor="@color/black"
                                 android:text="Select Category"
                                 android:textSize="18sp" />
 
@@ -101,6 +114,7 @@
                                 android:layout_margin="10dp"
                                 android:background="@drawable/border_style_edittext"
                                 android:focusable="false"
+                                android:textColorHint="@color/black"
                                 android:focusableInTouchMode="false"
                                 android:fontFamily="@font/raleway_light"
                                 android:hint="Category"
@@ -129,6 +143,7 @@
                                 android:drawablePadding="10dp"
                                 android:fontFamily="@font/raleway_light"
                                 android:padding="5dp"
+                                android:textColor="@color/black"
                                 android:text="Select Location"
                                 android:textSize="18sp" />
 
@@ -139,6 +154,7 @@
                                 android:layout_margin="10dp"
                                 android:background="@drawable/border_style_edittext"
                                 android:focusable="false"
+                                android:textColorHint="@color/black"
                                 android:focusableInTouchMode="false"
                                 android:fontFamily="@font/raleway_light"
                                 android:hint="Location"
@@ -167,6 +183,7 @@
                                 android:drawablePadding="10dp"
                                 android:fontFamily="@font/raleway_light"
                                 android:padding="5dp"
+                                android:textColor="@color/black"
                                 android:text="What's Min Budget"
                                 android:textSize="18sp" />
 
@@ -178,6 +195,7 @@
                                 android:background="@drawable/border_style_edittext"
                                 android:fontFamily="@font/raleway_light"
                                 android:hint="Min Budget"
+                                android:textColorHint="@color/black"
                                 android:inputType="number"
                                 android:textSize="15sp" />
 
@@ -202,6 +220,7 @@
                                 android:drawablePadding="10dp"
                                 android:fontFamily="@font/raleway_light"
                                 android:padding="5dp"
+                                android:textColor="@color/black"
                                 android:text="Showing"
                                 android:textSize="18sp" />
 
@@ -227,7 +246,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/style_button_solid"
                 android:orientation="horizontal">
 
                 <Button
@@ -236,13 +254,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="0.5"
-                    android:background="@drawable/style_button_lining"
+                    android:background="@color/colorPrimaryLight"
                     android:fontFamily="@font/raleway_light"
                     android:text="Reset"
                     android:textAllCaps="false"
-                    android:textColor="#015E6B"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
                     android:textSize="17sp" />
 
                 <Button
@@ -251,14 +271,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
                     android:layout_weight="0.5"
-                    android:background="@drawable/style_button_lining"
+                    android:background="@color/colorPrimaryLight"
                     android:fontFamily="@font/raleway_light"
                     android:text="Search"
                     android:textAllCaps="false"
-                    android:textColor="#015E6B"
-                    android:textSize="17sp" />
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 

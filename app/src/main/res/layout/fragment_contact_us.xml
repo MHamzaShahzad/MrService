@@ -17,7 +17,7 @@
             android:layout_height="170dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/ic_app_logo_white" />
 
         <TextView
             android:id="@+id/About_title_1"
@@ -27,7 +27,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:gravity="center_horizontal"
-            android:text="WE'D LOVE TO HELP YOU VIA EMAIL !"
+            android:text="WE'D LOVE TO HELP YOU VIA!"
             android:textColor="#fff"
             android:textSize="18sp"
             android:textStyle="bold" />

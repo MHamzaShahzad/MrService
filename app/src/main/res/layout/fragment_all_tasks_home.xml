@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/background"
+    android:background="@color/white"
     android:clickable="true"
     tools:context=".fragments.FragmentAllTasksHome">
 
@@ -14,7 +14,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryLight">
 
             <ImageView
                 android:id="@+id/btnShowFilters"
@@ -37,7 +38,7 @@
                 android:layout_toStartOf="@id/btnShowFilters"
                 android:layout_toLeftOf="@id/btnShowFilters"
                 android:background="@color/fui_transparent"
-                android:src="@drawable/ic_location_white" />
+                android:src="@drawable/ic_location_on__24dp" />
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/searchTaskByTitle"

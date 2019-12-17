@@ -3,17 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@mipmap/background"
     tools:context=".fragments.FragmentMoreContainer">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_app_logo_white"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -22,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/raleway_semi_bold"
                 android:padding="7dp"
+                android:textColor="@color/white"
                 android:text="Profile"
                 android:textSize="17sp" />
 
@@ -36,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/raleway_semi_bold"
                 android:padding="7dp"
+                android:textColor="@color/white"
                 android:text="Contact Us"
                 android:textSize="17sp" />
 
@@ -50,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/raleway_semi_bold"
                 android:padding="7dp"
+                android:textColor="@color/white"
                 android:text="About Us"
                 android:textSize="17sp" />
 
@@ -64,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/raleway_semi_bold"
                 android:padding="7dp"
+                android:textColor="@color/white"
                 android:text="Logout"
                 android:textSize="17sp" />
 
@@ -80,6 +90,7 @@
             android:fontFamily="@font/raleway_semi_bold"
             android:layout_marginBottom="?android:attr/actionBarSize"
             android:padding="5dp"
+            android:textColor="@color/white"
             android:text="Admin ?"/>
 
     </RelativeLayout>

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryLight"
+    android:background="@mipmap/background"
     android:clickable="true"
     tools:context=".fragments.FragmentViewProfile">
 
@@ -15,7 +15,7 @@
             android:id="@+id/header_cover_image"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@color/colorPrimaryLight"
+            android:background="@color/black"
             android:scaleType="centerCrop" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -35,7 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/header_cover_image"
-            android:background="@color/colorPrimary"
             android:paddingBottom="10dp">
 
 
@@ -85,7 +84,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="#fff"
+                android:textColor="@color/white"
+                android:background="@drawable/edittextstyle"
                 android:padding="20dp"
                 android:text="Email" />
 
@@ -96,7 +96,8 @@
                 android:layout_margin="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="3dp"
-                android:background="#fff"
+                android:textColor="@color/white"
+                android:background="@drawable/edittextstyle"
                 android:padding="20dp"
                 android:text="Mobile Number" />
 
@@ -105,7 +106,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="#fff"
+                android:textColor="@color/white"
+                android:background="@drawable/edittextstyle"
                 android:padding="20dp"
                 android:text="Address" />
 
@@ -116,7 +118,8 @@
                 android:layout_margin="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="3dp"
-                android:background="#fff"
+                android:textColor="@color/white"
+                android:background="@drawable/edittextstyle"
                 android:padding="20dp"
                 android:text="User Category" />
 
@@ -127,7 +130,8 @@
                 android:layout_margin="5dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginBottom="3dp"
-                android:background="#fff"
+                android:textColor="@color/white"
+                android:background="@drawable/edittextstyle"
                 android:padding="20dp"
                 android:text="About" />
 
