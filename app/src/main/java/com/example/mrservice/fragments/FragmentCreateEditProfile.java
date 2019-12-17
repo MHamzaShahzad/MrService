@@ -83,7 +83,7 @@ public class FragmentCreateEditProfile extends Fragment implements View.OnClickL
     private RatingBar user_profile_rating;
     private Button btn_submit_profile;
     private EditText user_profile_name, user_email, user_mobile, user_address, user_category, user_about;
-    private TextView user_rating_counts;
+    private TextView user_rating_counts, user_balance;
     private CheckBox btn_buyer, btn_seller;
 
     private UserProfileModel userProfileModelPrevious;
@@ -142,6 +142,7 @@ public class FragmentCreateEditProfile extends Fragment implements View.OnClickL
         user_category = view.findViewById(R.id.user_category);
         user_about = view.findViewById(R.id.user_about);
         btn_submit_profile = view.findViewById(R.id.btn_submit_profile);
+        user_balance = view.findViewById(R.id.user_balance);
 
         btn_buyer = view.findViewById(R.id.btn_buyer);
         btn_seller = view.findViewById(R.id.btn_seller);
@@ -187,16 +188,19 @@ public class FragmentCreateEditProfile extends Fragment implements View.OnClickL
                             }
 
                             user_profile_name.setText(userProfileModelPrevious.getUserName());
+                            user_balance.setText(userProfileModelPrevious.getUserBalance() + " /- PKR");
 
-                            if (firebaseUser.getPhoneNumber() == null && userProfileModelPrevious.getUserMobileNumber() == null) {
+                            Log.e(TAG, "onDataChange: " + firebaseUser.getPhoneNumber() + " : " + userProfileModelPrevious.getUserMobileNumber());
+                            if ((firebaseUser.getPhoneNumber() == null || firebaseUser.getPhoneNumber().length() == 0) && (userProfileModelPrevious.getUserMobileNumber() == null || userProfileModelPrevious.getUserMobileNumber().length() == 0)) {
                                 user_mobile.setFocusable(true);
                                 user_mobile.setFocusableInTouchMode(true);
                                 user_mobile.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.ic_edit_black_24dp), null);
                             } else {
+                                if (firebaseUser.getPhoneNumber() != null && firebaseUser.getPhoneNumber().length() > 0)
+                                    user_mobile.setText((firebaseUser.getPhoneNumber() != null) ? firebaseUser.getPhoneNumber().replace("+92", "") : "");
+
                                 if (userProfileModelPrevious.getUserMobileNumber() != null)
                                     user_mobile.setText(userProfileModelPrevious.getUserMobileNumber());
-                                if (firebaseUser.getPhoneNumber() != null)
-                                    user_mobile.setText((firebaseUser.getPhoneNumber() != null) ? firebaseUser.getPhoneNumber().replace("+92", "") : "");
                             }
 
                             user_email.setText(userProfileModelPrevious.getUserEmailAddress());
@@ -473,8 +477,8 @@ public class FragmentCreateEditProfile extends Fragment implements View.OnClickL
                 (selectedServiceId == null) ? (userProfileModelPrevious == null) ? null : userProfileModelPrevious.getUserServiceCatId() : selectedServiceId,
                 user_about.getText().toString(),
                 (userProfileModelPrevious == null) ? 0 : userProfileModelPrevious.getUserRating(),
-                (userProfileModelPrevious == null) ? 0 : userProfileModelPrevious.getRatingCounts()
-
+                (userProfileModelPrevious == null) ? 0 : userProfileModelPrevious.getRatingCounts(),
+                (userProfileModelPrevious == null) ? 0 : userProfileModelPrevious.getUserBalance()
         );
     }
 

@@ -44,4 +44,5 @@
         <item name="android:textColor">@color/colorPrimaryLight</item>
     </style>
 
+    <string name="search_hint">Search Task</string>
 </resources>

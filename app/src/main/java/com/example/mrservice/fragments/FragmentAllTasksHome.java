@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -88,7 +89,7 @@ public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout
         if (mListener != null)
             mListener.onFragmentInteractionListener(Constants.TITLE_HOME);
         context = container.getContext();
-        adapterSearchAutoComplete = new ArrayAdapter<>(context,android.R.layout.simple_dropdown_item_1line, listTitlesForATS);
+        adapterSearchAutoComplete = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, listTitlesForATS);
         // Inflate the layout for this fragment
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_all_tasks_home, container, false);
@@ -109,6 +110,8 @@ public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout
         btnShowTaskOnMap = view.findViewById(R.id.btnShowTaskOnMap);
 
         searchTaskByTitle = view.findViewById(R.id.searchTaskByTitle);
+        ImageView searchIcon = searchTaskByTitle.findViewById(R.id.search_button);
+        searchIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_search_white));
         SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete) searchTaskByTitle.findViewById(R.id.search_src_text);
         searchAutoComplete.setAdapter(adapterSearchAutoComplete);
 
@@ -118,8 +121,9 @@ public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout
         setSearchListener(searchAutoComplete);
     }
 
-    private void setSearchListener(final SearchView.SearchAutoComplete searchAutoComplete){
+    private void setSearchListener(final SearchView.SearchAutoComplete searchAutoComplete) {
         searchAutoComplete.setTextColor(getResources().getColor(R.color.white));
+        searchAutoComplete.setHintTextColor(getResources().getColor(R.color.white));
         searchAutoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -131,7 +135,7 @@ public class FragmentAllTasksHome extends Fragment implements SwipeRefreshLayout
         searchTaskByTitle.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(context, "You clicked on search " + searchTaskByTitle.getQuery() , Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "You clicked on search " + searchTaskByTitle.getQuery(), Toast.LENGTH_SHORT).show();
                 List<TaskModel> taskModelListTemp = new ArrayList<>();
                 for (TaskModel model : taskModelList)
                     if (Pattern.compile(Pattern.quote(searchTaskByTitle.getQuery().toString()), Pattern.CASE_INSENSITIVE).matcher(model.getTaskTitle()).find())

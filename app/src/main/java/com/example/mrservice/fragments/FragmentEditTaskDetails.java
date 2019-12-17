@@ -142,6 +142,11 @@ public class FragmentEditTaskDetails extends Fragment implements View.OnClickLis
                 selectTaskCategory.setText(taskModel.getTaskCatName());
                 taskLocation.setText(taskModel.getTaskLocation());
 
+                if (taskModel.getTaskType().equals(Constants.TASK_TYPE_PHYSICAL))
+                    btnPhysicalTask.setChecked(true);
+                if (taskModel.getTaskType().equals(Constants.TASK_TYPE_ONLINE))
+                    btnOnlineTask.setChecked(true);
+
                 selectedServiceId = taskModel.getTaskCategory();
                 uploadedDate = taskModel.getTaskUploadedOn();
                 taskLocationLatLng = new LatLng(CommonFunctionsClass.getTaskLatitude(taskModel.getTaskLatLng()), CommonFunctionsClass.getTaskLongitude(taskModel.getTaskLatLng()));

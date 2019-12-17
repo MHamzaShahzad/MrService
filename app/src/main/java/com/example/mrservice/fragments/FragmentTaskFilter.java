@@ -304,6 +304,8 @@ public class FragmentTaskFilter extends Fragment implements OnServiceSelectedI, 
         taskCategory.setText("");
         switchHideAssignedTask.setChecked(false);
 
+        spinnerSelectTaskType.setSelection(0);
+
         map.clear();
         fragmentAllTasksHome.onTaskFilter(map);
     }

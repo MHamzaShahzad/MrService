@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/colorPrimaryLight"
     tools:context=".fragments.FragmentCreateEditProfile">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -23,8 +23,8 @@
                     android:id="@+id/header_cover_image"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:scaleType="centerCrop"
-                    android:background="@color/colorPrimary"/>
+                    android:background="@color/colorPrimary"
+                    android:scaleType="centerCrop" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/user_profile_photo"
@@ -131,6 +131,32 @@
 
                     </LinearLayout>
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/white"
+                        android:padding="18dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Your Balance"
+                            android:textSize="17sp" />
+
+                        <TextView
+                            android:id="@+id/user_balance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:fontFamily="@font/raleway_semi_bold"
+                            android:text=" /- PKR"
+                            android:textColor="@color/colorPrimaryLight"
+                            android:textSize="17sp" />
+
+                    </RelativeLayout>
+
                     <EditText
                         android:id="@+id/user_email"
                         android:layout_width="match_parent"
@@ -139,8 +165,8 @@
                         android:background="@color/white"
                         android:focusable="false"
                         android:focusableInTouchMode="false"
-                        android:inputType="textEmailAddress"
                         android:hint="Email"
+                        android:inputType="textEmailAddress"
                         android:padding="18dp" />
 
 
@@ -151,9 +177,9 @@
                         android:layout_marginTop="5dp"
                         android:background="@color/white"
                         android:focusable="false"
-                        android:inputType="phone"
                         android:focusableInTouchMode="false"
                         android:hint="Mobile Number"
+                        android:inputType="phone"
                         android:maxLength="11"
                         android:padding="18dp" />
 
