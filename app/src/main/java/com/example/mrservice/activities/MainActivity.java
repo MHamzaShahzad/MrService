@@ -76,11 +76,11 @@ public class MainActivity extends AppCompatActivity implements FragmentInteracti
         navigationView.addSpaceItem(new SpaceItem("More", R.drawable.ic_more_vert_black_24dp));
 
         navigationView.showTextOnly();
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home, fragmentAllTasksHome).commit();
         navigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
             public void onCentreButtonClick() {
-                Toast.makeText(MainActivity.this, "onCentreButtonClick", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, "onCentreButtonClick", Toast.LENGTH_SHORT).show();
 
                 navigationView.setCentreButtonSelectable(true);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_home, fragmentAllTasksHome).commit();
@@ -89,16 +89,17 @@ public class MainActivity extends AppCompatActivity implements FragmentInteracti
             @Override
             public void onItemClick(int itemIndex, String itemName) {
                 replaceViews(itemIndex);
-                Toast.makeText(MainActivity.this, itemIndex + " " + itemName, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, itemIndex + " " + itemName, Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onItemReselected(int itemIndex, String itemName) {
                 replaceViews(itemIndex);
-                Toast.makeText(MainActivity.this, itemIndex + " " + itemName, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, itemIndex + " " + itemName, Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     @Override
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements FragmentInteracti
     private void alertDialogForBackPress() {
         new AlertDialog.Builder(this,
                 R.style.AlertDialog_Theme)
-                .setIcon(R.mipmap.ic_launcher)
+                .setIcon(R.mipmap.ic_app_logo)
                 .setTitle("Exit App")
                 .setMessage("Are you sure you want to quit?")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {

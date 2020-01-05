@@ -44,6 +44,7 @@ public class FragmentOffersList extends Fragment {
     private Bundle arguments;
     private TaskModel taskModel;
     private ValueEventListener taskValueEventListener;
+    private UserProfileModel userProfileModel;
 
 
     public static FragmentOffersList getInstance(Bundle arguments) {
@@ -76,8 +77,9 @@ public class FragmentOffersList extends Fragment {
         if (arguments != null) {
 
             taskModel = (TaskModel) arguments.getSerializable(Constants.STRING_TASK_OBJECT);
+            userProfileModel = (UserProfileModel) arguments.getSerializable(Constants.STRING_USER_PROFILE_OBJECT);
 
-            setRecyclerView(taskModel);
+            setRecyclerView(taskModel, userProfileModel);
             loadTaskModelData(taskModel.getTaskId());
         }
 
@@ -111,11 +113,11 @@ public class FragmentOffersList extends Fragment {
         MyFirebaseDatabase.TASKS_REFERENCE.child(taskId).addValueEventListener(taskValueEventListener);
     }
 
-    private void setRecyclerView(TaskModel taskModel) {
+    private void setRecyclerView(TaskModel taskModel, UserProfileModel userProfileModel) {
         recyclerTaskOffers = view.findViewById(R.id.recyclerTaskOffers);
         recyclerTaskOffers.setLayoutManager(new LinearLayoutManager(context));
         recyclerTaskOffers.setHasFixedSize(true);
-        adapterAllOffers = new AdapterAllOffers(context, taskModel, taskBidList);
+        adapterAllOffers = new AdapterAllOffers(context, taskModel, userProfileModel, taskBidList);
         recyclerTaskOffers.setAdapter(adapterAllOffers);
 
         getTaskOffers(taskModel.getTaskId());
@@ -133,7 +135,8 @@ public class FragmentOffersList extends Fragment {
                         if (snapshot.exists() && snapshot.getValue() != null)
                             try {
                                 TaskBid taskBid = snapshot.getValue(TaskBid.class);
-                                taskBidList.add(taskBid);
+                                if (taskBid != null)
+                                    taskBidList.add(taskBid);
 
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -163,11 +166,11 @@ public class FragmentOffersList extends Fragment {
 
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         removeBidsEventListener();
         removeTaskModelEventListener();
     }
+
 }

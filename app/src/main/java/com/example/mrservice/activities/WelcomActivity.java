@@ -38,7 +38,7 @@ public class WelcomActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
 
         if (new PreferenceManager(this).checkPreference()) {
-            //loadHome();
+            loadHome();
         }
         if (Build.VERSION.SDK_INT > 19) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

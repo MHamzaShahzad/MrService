@@ -294,7 +294,8 @@
                             android:id="@+id/btnRemoveOffer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginLeft="5dp"
                             android:background="@color/colorPrimaryLight"
                             android:padding="5dp"
                             android:text="Remove Task"
@@ -351,15 +352,15 @@
                         android:id="@+id/tabTaskOfferAndComments"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintLeft_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:tabBackground="@color/colorPrimaryLight"
                         app:tabIndicatorColor="#BFFFFFFF"
                         app:tabMode="fixed"
-                        android:layout_margin="5dp"
                         app:tabSelectedTextColor="@color/white"
-                        app:tabTextColor="@color/white"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:tabTextColor="@color/white" />
 
                     <FrameLayout
                         android:id="@+id/fragmentOffersOrComments"

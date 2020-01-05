@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mrservice.CommonFunctionsClass;
 import com.example.mrservice.Constants;
 import com.example.mrservice.R;
 import com.example.mrservice.adapters.AdapterAllOffers;
@@ -30,7 +32,9 @@ import com.example.mrservice.interfaces.FragmentInteractionListener;
 import com.example.mrservice.models.ChatModel;
 import com.example.mrservice.models.TaskBid;
 import com.example.mrservice.models.TaskModel;
+import com.example.mrservice.models.TransactionModel;
 import com.example.mrservice.models.UserProfileModel;
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
@@ -65,6 +69,7 @@ public class FragmentTaskDescription extends Fragment {
     private ValueEventListener taskValueEventListener, userProfileValueEventListener;
     private String taskId, userProfileId;
 
+    private UserProfileModel userProfileModel;
     private FirebaseUser firebaseUser;
     private FragmentInteractionListener mListener;
     private TabLayout tabTaskOfferAndComments;
@@ -256,6 +261,7 @@ public class FragmentTaskDescription extends Fragment {
         bundleOffersArguments.clear();
 
         bundleOffersArguments.putSerializable(Constants.STRING_TASK_OBJECT, taskModel);
+
         bundleChatArguments.putString(Constants.MESSAGE_RECEIVER_ID, taskModel.getTaskUploadedBy());
         bundleChatArguments.putString(Constants.CHAT_ID_REF, taskModel.getTaskId());
 
@@ -296,7 +302,8 @@ public class FragmentTaskDescription extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(context, "Successfully!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(context, "Task completion successful!", Toast.LENGTH_LONG).show();
+                            transferMoneyToAssignedUser();
                             SendPushNotificationFirebase.buildAndSendNotification(context,
                                     taskModel.getTaskAssignedTo(), "Task Completed!",
                                     "Your task has been declared completed."
@@ -326,6 +333,70 @@ public class FragmentTaskDescription extends Fragment {
 
     }
 
+    private void transferMoneyToAssignedUser() {
+        MyFirebaseDatabase.TRANSACTIONS_REFERENCE.child(userProfileId).child(taskId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.e(TAG, "onDataChange: TRANS_1 " + dataSnapshot );
+                if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
+                    try {
+
+                        final TransactionModel transactionModel = dataSnapshot.getValue(TransactionModel.class);
+                        if (transactionModel != null) {
+                            dataSnapshot.getRef().child(TransactionModel.SUBMITTED_AT_DATE_TIME_REF).setValue(CommonFunctionsClass.getCurrentDateTime());
+                            dataSnapshot.getRef().child(TransactionModel.TRANSACTION_STATUS_REF).setValue(Constants.TRANSACTION_STATUS_COMPLETED);
+                            MyFirebaseDatabase.USERS_REFERENCE.child(transactionModel.getCreditedTo()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    Log.e(TAG, "onDataChange: TRANS_2 " + dataSnapshot );
+                                    if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
+                                        try {
+
+                                            UserProfileModel creditedToProfileModel = dataSnapshot.getValue(UserProfileModel.class);
+                                            if (creditedToProfileModel != null) {
+
+                                                final long newBalance = creditedToProfileModel.getUserBalance() + Integer.valueOf(transactionModel.getTotalAmount());
+
+                                                dataSnapshot.getRef().child(UserProfileModel.STRING_USER_BALANCE_REF).setValue(newBalance).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        if (task.isSuccessful()) {
+                                                            SendPushNotificationFirebase.buildAndSendNotification(context,
+                                                                    transactionModel.getCreditedTo(),
+                                                                    "Amount Received",
+                                                                    "You have been received an amount of Rs." + transactionModel.getTotalAmount() + " in your wallet. And your new balance is Rs." + newBalance);
+                                                        }
+                                                    }
+                                                });
+                                            }
+
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 
     private void loadTaskUploadedByProfileData(String userProfileId) {
         userProfileValueEventListener = new ValueEventListener() {
@@ -333,8 +404,9 @@ public class FragmentTaskDescription extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists() && dataSnapshot.getValue() != null) {
                     try {
-                        UserProfileModel userProfileModel = dataSnapshot.getValue(UserProfileModel.class);
+                        userProfileModel = dataSnapshot.getValue(UserProfileModel.class);
                         if (userProfileModel != null) {
+
                             if (userProfileModel.getUserImageUrl() != null && !userProfileModel.getUserImageUrl().equals("") && !userProfileModel.getUserImageUrl().equals("null"))
                                 Picasso.get()
                                         .load(userProfileModel.getUserImageUrl())
@@ -344,6 +416,7 @@ public class FragmentTaskDescription extends Fragment {
                                         .into(profileImage);
 
                             placePostedBy.setText(userProfileModel.getUserName());
+                            bundleOffersArguments.putSerializable(Constants.STRING_USER_PROFILE_OBJECT, userProfileModel);
                             seeUserProfile(userProfileModel);
                         }
                     } catch (Exception e) {

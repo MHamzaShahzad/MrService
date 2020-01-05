@@ -2,6 +2,7 @@ package com.example.mrservice.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.mrservice.CommonFunctionsClass;
 import com.example.mrservice.Constants;
 import com.example.mrservice.R;
 import com.example.mrservice.controllers.MyFirebaseDatabase;
@@ -23,9 +25,11 @@ import com.example.mrservice.fragments.FragmentViewProfile;
 import com.example.mrservice.interfaces.OnTaskModelUpdateI;
 import com.example.mrservice.models.TaskBid;
 import com.example.mrservice.models.TaskModel;
+import com.example.mrservice.models.TransactionModel;
 import com.example.mrservice.models.UserProfileModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,12 +47,14 @@ public class AdapterAllOffers extends RecyclerView.Adapter<AdapterAllOffers.Hold
     private static final String TAG = AdapterAllOffers.class.getName();
     private Context context;
     private TaskModel taskModel;
+    private UserProfileModel userProfileModel;
     private List<TaskBid> list;
     private FirebaseUser firebaseUser;
 
-    public AdapterAllOffers(Context context, TaskModel taskModel, List<TaskBid> list) {
+    public AdapterAllOffers(Context context, TaskModel taskModel, UserProfileModel userProfileModel, List<TaskBid> list) {
         this.context = context;
         this.taskModel = taskModel;
+        this.userProfileModel = userProfileModel;
         this.list = list;
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     }
@@ -158,12 +164,12 @@ public class AdapterAllOffers extends RecyclerView.Adapter<AdapterAllOffers.Hold
                                         .error(R.drawable.image_avatar)
                                         .centerInside().fit()
                                         .into(holder.profileImage);
+                            seeUserProfile(holder, userProfileModel);
 
                             holder.userName.setText(userProfileModel.getUserName());
                             holder.userRating.setText(userProfileModel.getUserRating() + "(" + userProfileModel.getRatingCounts() + ")");
                             holder.ratingBar.setRating(userProfileModel.getUserRating());
 
-                            seeUserProfile(holder, userProfileModel);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -184,23 +190,32 @@ public class AdapterAllOffers extends RecyclerView.Adapter<AdapterAllOffers.Hold
         holder.btnAcceptOffer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Map<String, Object> mapForUpdate = new HashMap<>();
-                mapForUpdate.put(TaskModel.STRING_TASK_ASSIGNED_TO_REF, taskBid.getBidBuyerId());
-                mapForUpdate.put(TaskModel.STRING_TASK_STATUS_REF, Constants.TASKS_STATUS_ASSIGNED);
-                MyFirebaseDatabase.TASKS_REFERENCE.child(taskModel.getTaskId()).updateChildren(mapForUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(context, "Offer accepted successfully!", Toast.LENGTH_LONG).show();
-                            SendPushNotificationFirebase.buildAndSendNotification(context,
-                                    taskBid.getBidBuyerId(),
-                                    "Offer Accepted",
-                                    "Your, bid request has been accepted!");
-                        } else
-                            Toast.makeText(context, "Offer can't be accepted!", Toast.LENGTH_LONG).show();
 
-                    }
-                });
+                if (taskModel.getTaskBudget() != null && userProfileModel.getUserBalance() >= Integer.valueOf(taskModel.getTaskBudget())) {
+
+                    Map<String, Object> mapForUpdate = new HashMap<>();
+                    mapForUpdate.put(TaskModel.STRING_TASK_ASSIGNED_TO_REF, taskBid.getBidBuyerId());
+                    mapForUpdate.put(TaskModel.STRING_TASK_STATUS_REF, Constants.TASKS_STATUS_ASSIGNED);
+                    MyFirebaseDatabase.TASKS_REFERENCE.child(taskModel.getTaskId()).updateChildren(mapForUpdate).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                updateUserBalanceAndManageTransaction(taskBid.getBidBuyerId());
+                                Toast.makeText(context, "Offer accepted successfully!", Toast.LENGTH_LONG).show();
+                                SendPushNotificationFirebase.buildAndSendNotification(context,
+                                        taskBid.getBidBuyerId(),
+                                        "Offer Accepted",
+                                        "Your, bid request has been accepted!");
+                            } else
+                                Toast.makeText(context, "Offer can't be accepted!", Toast.LENGTH_LONG).show();
+
+                        }
+                    });
+
+                }else {
+                    Toast.makeText(context, "You have insufficient balance.", Toast.LENGTH_LONG).show();
+                }
+
             }
         });
     }
@@ -209,7 +224,6 @@ public class AdapterAllOffers extends RecyclerView.Adapter<AdapterAllOffers.Hold
         holder.profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constants.STRING_USER_PROFILE_OBJECT, profileModel);
                 ((FragmentActivity) context)
@@ -222,6 +236,30 @@ public class AdapterAllOffers extends RecyclerView.Adapter<AdapterAllOffers.Hold
 
             }
         });
+    }
+
+    private void updateUserBalanceAndManageTransaction(String buyerId) {
+        MyFirebaseDatabase.TRANSACTIONS_REFERENCE.child(taskModel.getTaskUploadedBy()).child(taskModel.getTaskId()).setValue(buildTransactionModel(buyerId)).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    long newBalance = userProfileModel.getUserBalance() - Integer.valueOf(taskModel.getTaskBudget());
+                    MyFirebaseDatabase.USERS_REFERENCE.child(taskModel.getTaskUploadedBy()).child(UserProfileModel.STRING_USER_BALANCE_REF).setValue(newBalance);
+                }
+            }
+        });
+    }
+
+    private TransactionModel buildTransactionModel(String buyerId) {
+        return new TransactionModel(
+                taskModel.getTaskId(),
+                taskModel.getTaskBudget(),
+                taskModel.getTaskUploadedBy(),
+                buyerId,
+                CommonFunctionsClass.getCurrentDateTime(),
+                "",
+                Constants.TRANSACTION_STATUS_PENDING
+        );
     }
 
 }

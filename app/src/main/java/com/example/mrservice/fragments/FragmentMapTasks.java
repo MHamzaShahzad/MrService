@@ -1,25 +1,24 @@
 package com.example.mrservice.fragments;
 
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.mrservice.CommonFunctionsClass;
 import com.example.mrservice.Constants;
 import com.example.mrservice.R;
 import com.example.mrservice.adapters.AdapterTasksMapCustomInfoWindow;
-import com.example.mrservice.interfaces.OnTaskModelUpdateI;
 import com.example.mrservice.interfaces.OnTasksListUpdateI;
 import com.example.mrservice.models.TaskModel;
-import com.google.android.gms.common.internal.service.Common;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -51,6 +50,7 @@ public class FragmentMapTasks extends Fragment implements OnMapReadyCallback, On
 
     private FragmentMapTasks() {
         // Required empty public constructor
+        taskModelList = new ArrayList<>();
     }
 
 
@@ -87,6 +87,17 @@ public class FragmentMapTasks extends Fragment implements OnMapReadyCallback, On
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
+
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setRotateGesturesEnabled(true);
+        googleMap.getUiSettings().setScrollGesturesEnabled(true);
+        googleMap.getUiSettings().setTiltGesturesEnabled(false);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && context.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                mMap.setMyLocationEnabled(true);
+
         adapterTasksMapCustomInfoWindow = new AdapterTasksMapCustomInfoWindow(context, mMap);
         mMap.setInfoWindowAdapter(adapterTasksMapCustomInfoWindow);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(30.3753, 69.3451), 6));
@@ -120,13 +131,13 @@ public class FragmentMapTasks extends Fragment implements OnMapReadyCallback, On
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-
-        Log.e(TAG, "onMarkerClick: " + marker.getTag() );
+        Log.e(TAG, "onMarkerClick: " + marker.getTag());
         marker.showInfoWindow();
 
         if (getIndex(marker) != -1) {
             marker.showInfoWindow();
         }
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 14));
 
         return true;
     }

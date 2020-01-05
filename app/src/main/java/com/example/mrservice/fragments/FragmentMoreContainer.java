@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -34,11 +35,12 @@ public class FragmentMoreContainer extends Fragment implements View.OnClickListe
     private Context context;
     private View view;
 
-    private TextView btnLogout, btnProfile, btnAdminLogin, btnContactUs, btnAboutUs;
+    private TextView btnLogout, btnProfile, btnTransactionsHistory, btnAdminLogin, btnContactUs, btnAboutUs;
 
     private FirebaseAuth mAuth;
 
     private FragmentCreateEditProfile fragmentCreateEditProfile;
+    private MyTransactionsFragment fragmentTransaction;
     private FragmentContactUs fragmentContactUs;
     private FragmentAboutUs fragmentAboutUs;
 
@@ -73,6 +75,7 @@ public class FragmentMoreContainer extends Fragment implements View.OnClickListe
     private void findViewById() {
         btnLogout = view.findViewById(R.id.btnLogout);
         btnProfile = view.findViewById(R.id.btnProfile);
+        btnTransactionsHistory = view.findViewById(R.id.btnTransactionsHistory);
         btnAdminLogin = view.findViewById(R.id.btnAdminLogin);
         btnContactUs = view.findViewById(R.id.btnContactUs);
         btnAboutUs = view.findViewById(R.id.btnAboutUs);
@@ -82,6 +85,7 @@ public class FragmentMoreContainer extends Fragment implements View.OnClickListe
     private void setClickListeners() {
         btnLogout.setOnClickListener(this);
         btnProfile.setOnClickListener(this);
+        btnTransactionsHistory.setOnClickListener(this);
         btnAdminLogin.setOnClickListener(this);
         btnContactUs.setOnClickListener(this);
         btnAboutUs.setOnClickListener(this);
@@ -89,9 +93,9 @@ public class FragmentMoreContainer extends Fragment implements View.OnClickListe
 
     private void initFragments() {
         fragmentCreateEditProfile = FragmentCreateEditProfile.getInstance();
+        fragmentTransaction = MyTransactionsFragment.getInstance(null);
         fragmentContactUs = FragmentContactUs.getInstance();
         fragmentAboutUs = FragmentAboutUs.getInstance();
-
     }
 
     @Override
@@ -99,6 +103,9 @@ public class FragmentMoreContainer extends Fragment implements View.OnClickListe
 
         if (view == btnProfile) {
             ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(android.R.id.content, fragmentCreateEditProfile).addToBackStack(Constants.TITLE_PROFILE).commit();
+        }
+        if (view == btnTransactionsHistory) {
+            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(android.R.id.content, fragmentTransaction).addToBackStack(Constants.TITLE_TRANSACTIONS).commit();
         }
         if (view == btnLogout) {
             CommonFunctionsClass.logoutUser(mAuth, context);

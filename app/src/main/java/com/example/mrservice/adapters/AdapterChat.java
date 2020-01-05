@@ -1,6 +1,7 @@
 package com.example.mrservice.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,10 +13,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mrservice.Constants;
 import com.example.mrservice.R;
 import com.example.mrservice.controllers.MyFirebaseDatabase;
+import com.example.mrservice.fragments.FragmentViewProfile;
 import com.example.mrservice.models.ChatModel;
 import com.example.mrservice.models.UserProfileModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -124,7 +128,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.Holder> {
                             holder.textUserName.setText(userProfileModel.getUserName());
                             holder.ratingBar.setRating(userProfileModel.getUserRating());
                             holder.ratingCounts.setText("(" + userProfileModel.getRatingCounts() + ")");
-
+                            seeUserProfile(holder, userProfileModel);
                         }
 
                     } catch (Exception e) {
@@ -135,6 +139,24 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.Holder> {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void seeUserProfile(AdapterChat.Holder holder, final UserProfileModel profileModel) {
+        holder.profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants.STRING_USER_PROFILE_OBJECT, profileModel);
+                ((FragmentActivity) context)
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(android.R.id.content
+                                , FragmentViewProfile.getInstance(bundle))
+                        .addToBackStack(null)
+                        .commit();
 
             }
         });

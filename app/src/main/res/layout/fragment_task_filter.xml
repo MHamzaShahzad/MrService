@@ -10,13 +10,16 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <TextView
+            android:id="@+id/textTasksFilter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Filter your tasks"
             android:textStyle="bold"
             android:fontFamily="@font/raleway_light"
             android:layout_margin="10dp"
+            android:textAllCaps="true"
             android:background="@drawable/border_style_edittext"
             android:textSize="18sp"/>
 
@@ -28,6 +31,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="60dp"
                 android:fillViewport="true">
 
                 <RelativeLayout
@@ -114,7 +118,6 @@
                                 android:layout_margin="10dp"
                                 android:background="@drawable/border_style_edittext"
                                 android:focusable="false"
-                                android:textColorHint="@color/black"
                                 android:focusableInTouchMode="false"
                                 android:fontFamily="@font/raleway_light"
                                 android:hint="Category"
@@ -154,7 +157,6 @@
                                 android:layout_margin="10dp"
                                 android:background="@drawable/border_style_edittext"
                                 android:focusable="false"
-                                android:textColorHint="@color/black"
                                 android:focusableInTouchMode="false"
                                 android:fontFamily="@font/raleway_light"
                                 android:hint="Location"
@@ -195,7 +197,6 @@
                                 android:background="@drawable/border_style_edittext"
                                 android:fontFamily="@font/raleway_light"
                                 android:hint="Min Budget"
-                                android:textColorHint="@color/black"
                                 android:inputType="number"
                                 android:textSize="15sp" />
 
@@ -229,7 +230,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp"
-                                android:padding="20dp"
                                 android:background="@drawable/border_style_edittext"
                                 android:fontFamily="@font/raleway_light" />
 

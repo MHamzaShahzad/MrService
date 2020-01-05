@@ -15,5 +15,6 @@ public class MyFirebaseDatabase {
     public static final DatabaseReference FEEDBACK_REFERENCE = database.getReference(Constants.STRING_FEEDBACK_REFERENCE);
     public static final DatabaseReference CHAT_REFERENCE = database.getReference(Constants.STRING_CHAT_REFERENCE);
     public static final DatabaseReference TASK_OFFERS_REFERENCE = database.getReference(Constants.STRING_OFFERS_REF);
+    public static final DatabaseReference TRANSACTIONS_REFERENCE = database.getReference(Constants.STRING_TRANSACTIONS_REF);
 
 }

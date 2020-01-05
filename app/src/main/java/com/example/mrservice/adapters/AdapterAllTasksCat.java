@@ -52,8 +52,8 @@ public class AdapterAllTasksCat extends RecyclerView.Adapter<AdapterAllTasksCat.
         if (cat.getCategoryImageUrl() != null && !cat.getCategoryImageUrl().equals("") && !cat.getCategoryImageUrl().equals("null"))
             Picasso.get()
                     .load(cat.getCategoryImageUrl())
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .error(R.drawable.ic_launcher_background)
+                    .placeholder(R.drawable.image_placeholder)
+                    .error(R.drawable.image_placeholder)
                     .centerInside().fit()
                     .into(holder.serviceImage);
 

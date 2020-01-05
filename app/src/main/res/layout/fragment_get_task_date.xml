@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
                 android:gravity="center"
+                android:fontFamily="@font/raleway_light"
                 android:textColor="@color/white"
                 android:text="Details" />
 
@@ -34,6 +35,8 @@
                 android:layout_weight="0.33"
                 android:textColor="@color/white"
                 android:gravity="center"
+                android:fontFamily="@font/raleway_semi_bold"
+                android:textSize="20sp"
                 android:text="Date" />
 
             <TextView
@@ -42,6 +45,7 @@
                 android:layout_weight="0.33"
                 android:textColor="@color/white"
                 android:gravity="center"
+                android:fontFamily="@font/raleway_light"
                 android:text="Budget" />
 
         </LinearLayout>
@@ -79,7 +83,6 @@
             android:layout_alignParentBottom="true"
             android:background="@color/colorPrimaryLight"
             android:textColor="@color/white"
-            android:layout_margin="5dp"
             android:text="Next" />
 
     </RelativeLayout>

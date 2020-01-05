@@ -15,6 +15,7 @@ public class Constants {
     public static final String STRING_FEEDBACK_REFERENCE = "ContactUsOrFeedback";
     public static final String STRING_CHAT_REFERENCE = "Chat";
     public static final String STRING_MY_TASKS_REF = "MyTasks";
+    public static final String STRING_TRANSACTIONS_REF = "Transactions";
 
     public static final String STRING_PROFILE_PIC_STORAGE = "profile_pics/";
     public static final String STRING_TASKS_PIC_STORAGE = "tasks_pics/";
@@ -41,6 +42,12 @@ public class Constants {
     public static final String STRING_TASKS_STATUS_REVIEWED = "Reviewed";
     public static final String STRING_TASKS_STATUS_CANCELLED = "Cancelled";
 
+    public static final String TRANSACTION_STATUS_PENDING = "0";
+    public static final String TRANSACTION_STATUS_COMPLETED = "1";
+
+    public static final String STRING_TRANSACTION_STATUS_PENDING = "Pending";
+    public static final String STRING_TRANSACTION_STATUS_COMPLETED = "Completed";
+
     public static final String TITLE_CONTACT_US = "Contact Us";
     public static final String TITLE_HOME = "Home";
     public static final String TITLE_PROFILE = "Profile";
@@ -59,6 +66,7 @@ public class Constants {
     public static final String TITLE_TASK_BUDGET = "Budget";
     public static final String TITLE_MORE_OPTIONS = "Explore";
     public static final String TITLE_ABOUT_US = "About Us";
+    public static final String TITLE_TRANSACTIONS = "Transactions";
 
     public static final String TASKS_STATUS_OPEN = "0";
     public static final String TASKS_STATUS_ASSIGNED = "1";

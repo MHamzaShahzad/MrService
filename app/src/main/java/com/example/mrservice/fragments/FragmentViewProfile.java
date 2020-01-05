@@ -11,6 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 
 import com.example.mrservice.CommonFunctionsClass;
@@ -22,7 +23,6 @@ import com.firebase.ui.auth.data.model.User;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 
 
 public class FragmentViewProfile extends Fragment {
@@ -38,7 +38,7 @@ public class FragmentViewProfile extends Fragment {
     private FragmentInteractionListener mListener;
     private Bundle arguments;
 
-    public static FragmentViewProfile getInstance(Bundle arguments){
+    public static FragmentViewProfile getInstance(Bundle arguments) {
         return new FragmentViewProfile(arguments);
     }
 
@@ -82,16 +82,23 @@ public class FragmentViewProfile extends Fragment {
 
         if (arguments != null) {
 
-            UserProfileModel userProfileModel = (UserProfileModel) arguments.getSerializable(Constants.STRING_USER_PROFILE_OBJECT);
+            final UserProfileModel userProfileModel = (UserProfileModel) arguments.getSerializable(Constants.STRING_USER_PROFILE_OBJECT);
             if (userProfileModel != null) {
 
-                if (userProfileModel.getUserImageUrl() != null && !userProfileModel.getUserImageUrl().equals("") && !userProfileModel.getUserImageUrl().equals("null"))
+                if (userProfileModel.getUserImageUrl() != null && !userProfileModel.getUserImageUrl().equals("") && !userProfileModel.getUserImageUrl().equals("null")) {
                     Picasso.get()
                             .load(userProfileModel.getUserImageUrl())
                             .placeholder(R.drawable.image_avatar)
                             .error(R.drawable.image_avatar)
                             .centerInside().fit()
                             .into(user_profile_photo);
+                    user_profile_photo.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(android.R.id.content, FragmentLargePicture.getInstance(userProfileModel.getUserImageUrl())).addToBackStack(null).commit();
+                        }
+                    });
+                }
 
                 user_profile_name.setText(userProfileModel.getUserName());
                 user_mobile.setText(userProfileModel.getUserMobileNumber());
@@ -106,6 +113,7 @@ public class FragmentViewProfile extends Fragment {
 
         }
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

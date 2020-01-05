@@ -38,6 +38,21 @@
                 android:background="@color/grey" />
 
             <TextView
+                android:id="@+id/btnTransactionsHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/raleway_semi_bold"
+                android:padding="7dp"
+                android:textColor="@color/white"
+                android:text="Transactions"
+                android:textSize="17sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/grey" />
+
+            <TextView
                 android:id="@+id/btnContactUs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

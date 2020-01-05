@@ -17,39 +17,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:padding="10dp"
             android:background="@color/colorPrimaryLight"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
+                android:fontFamily="@font/raleway_semi_bold"
                 android:gravity="center"
+                android:text="Details"
                 android:textColor="@color/white"
-                android:text="Details" />
+                android:textSize="20sp" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
-                android:textColor="@color/white"
+                android:fontFamily="@font/raleway_light"
                 android:gravity="center"
-                android:text="Date" />
+                android:text="Date"
+                android:textColor="@color/white" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33"
-                android:textColor="@color/white"
+                android:fontFamily="@font/raleway_light"
                 android:gravity="center"
-                android:text="Budget" />
+                android:text="Budget"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@id/btnNextFromDetails"
             android:layout_below="@id/layout_task_uploading_steps"
             android:fillViewport="true">
 
@@ -65,8 +70,8 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/edittextstyle"
                     android:hint="Task Title..."
-                    android:padding="10dp"
                     android:inputType="text"
+                    android:padding="10dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white" />
 
@@ -76,12 +81,12 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/taskTitle"
                     android:layout_marginTop="10dp"
-                    android:padding="10dp"
                     android:background="@drawable/edittextstyle"
                     android:gravity="top|start"
                     android:hint="Detail about Task"
                     android:inputType="textMultiLine"
                     android:lines="10"
+                    android:padding="10dp"
                     android:scrollHorizontally="false"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white" />
@@ -90,11 +95,11 @@
                     android:id="@+id/taskTypeGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_below="@id/taskDescription"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/edittextstyle"
-                    android:padding="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="10dp">
 
                     <RadioButton
                         android:id="@+id/btnPhysicalTask"
@@ -122,11 +127,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/taskTypeGroup"
                     android:layout_marginTop="10dp"
-                    android:padding="10dp"
                     android:background="@drawable/edittextstyle"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
                     android:hint="Task Location"
+                    android:padding="10dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white" />
 
@@ -140,9 +145,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/colorPrimaryLight"
-            android:textColor="@color/white"
-            android:layout_margin="5dp"
-            android:text="Next" />
+            android:text="Next"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 
